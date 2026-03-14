@@ -64,6 +64,18 @@
 
         .deadline { font-weight: bold; color: var(--dark-green); background: rgba(76, 175, 80, 0.2); padding: 8px 12px; border-radius: 8px; display: inline-block; margin-top: 10px; }
 
+        /* Estilo do Aviso de Convidado */
+        .alert-box {
+            background-color: rgba(255, 140, 0, 0.1);
+            border-left: 4px solid var(--sunset-orange);
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+        .alert-box i { color: var(--sunset-orange); margin-right: 5px; font-size: 1.2rem; }
+
         .btn { display: inline-block; text-decoration: none; font-family: 'Baloo 2', cursive; font-size: 1.2rem; padding: 10px 20px; border-radius: 50px; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; text-align: center; width: 100%; }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .btn-map { background-color: var(--green); color: white; margin-top: 10px; width: auto; font-size: 1rem; padding: 8px 15px; }
@@ -133,10 +145,17 @@
 
         <section>
             <h2><i class="fas fa-envelope-open-text"></i> Confirmação (RSVP)</h2>
+            
+            <!-- AVISO CONVIDADO NÃO CONVIDA -->
+            <div class="alert-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Atenção:</strong> Lembre-se que <em>"convidado não convida"</em>. Como nossa festa será em um buffet, a quantidade de pessoas é rigorosamente contada. A entrada será permitida apenas para os nomes confirmados abaixo. Agradecemos muito a compreensão! 💛
+            </div>
+
             <form id="rsvpForm" name="rsvpForm">
                 
                 <div class="form-group">
-                    <label>Nome Completo:</label>
+                    <label>Seu Nome Completo:</label>
                     <input type="text" name="Nome" placeholder="Digite seu nome" required>
                 </div>
 
@@ -152,6 +171,16 @@
                             <span>Não poderei ir 🦒</span>
                         </label>
                     </div>
+                </div>
+
+                <!-- CÔNJUGE -->
+                <div class="form-group">
+                    <label>Possui cônjuge convidado?</label>
+                    <div class="radio-group-inline">
+                        <label><input type="radio" name="Conjugue_Convidado" value="Sim" onclick="toggleInput('input-conjugue', true)" required> Sim</label>
+                        <label><input type="radio" name="Conjugue_Convidado" value="Não" onclick="toggleInput('input-conjugue', false)"> Não</label>
+                    </div>
+                    <input type="text" name="Nome_Conjugue" id="input-conjugue" class="child-input" placeholder="Digite o nome do seu cônjuge">
                 </div>
 
                 <!-- Crianças MAIORES de 5 anos -->
@@ -223,8 +252,9 @@
             }
         }
 
-        // URL do seu script inserida aqui
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxGdnYLlFOaJBa6mOVOX7VysSmBg4wXFA0XlX_Lvnavz2aMYD6zTXXRmdnuriNEcwaclA/exec'; 
+        // --- ATENÇÃO: COLE SUA URL DO SCRIPT ABAIXO ---
+        // (A mesma URL que você gerou na versão anterior para o CORS funcionar)
+        const scriptURL = 'COLE_SUA_URL_DO_SCRIPT_AQUI'; 
         
         const form = document.forms['rsvpForm'];
         const btnSubmit = document.getElementById('btn-submit');
@@ -235,19 +265,25 @@
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = 'Enviando... <i class="fas fa-spinner fa-spin"></i>';
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    msgSucesso.style.display = 'block';
-                    btnSubmit.style.display = 'none'; 
-                    form.reset();
-                    toggleInput('input-maior', false);
-                    toggleInput('input-menor', false);
-                })
-                .catch(error => {
-                    alert('Erro ao enviar. Por favor, tente novamente ou chame no WhatsApp.');
-                    btnSubmit.disabled = false;
-                    btnSubmit.innerHTML = 'Confirmar Presença <i class="fas fa-check-circle"></i>';
-                });
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: new FormData(form),
+                mode: 'no-cors' 
+            })
+            .then(() => {
+                msgSucesso.style.display = 'block';
+                btnSubmit.style.display = 'none'; 
+                form.reset();
+                // Limpa e esconde os campos condicionais ao terminar
+                toggleInput('input-conjugue', false);
+                toggleInput('input-maior', false);
+                toggleInput('input-menor', false);
+            })
+            .catch(error => {
+                alert('Erro ao enviar. Por favor, tente novamente ou chame no WhatsApp.');
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = 'Confirmar Presença <i class="fas fa-check-circle"></i>';
+            });
         });
     </script>
 </body>
