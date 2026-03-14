@@ -64,7 +64,6 @@
 
         .deadline { font-weight: bold; color: var(--dark-green); background: rgba(76, 175, 80, 0.2); padding: 8px 12px; border-radius: 8px; display: inline-block; margin-top: 10px; }
 
-        /* Estilo do Aviso de Convidado */
         .alert-box {
             background-color: rgba(255, 140, 0, 0.1);
             border-left: 4px solid var(--sunset-orange);
@@ -132,7 +131,7 @@
                     <i class="fas fa-map-marker-alt"></i>
                     <div>
                         <strong>Local:</strong><br>R. Lauro Pedro Nunes, 134<br>Jardim Maria Beatriz – Carapicuíba<br>
-                        <a href="https://www.google.com/maps/search/?api=1&query=R.+Lauro+Pedro+Nunes,+134+-+Jardim+Maria+Beatriz+–+Carapicuíba" target="_blank" class="btn btn-map">
+                        <a href="https://www.google.com/maps/search/?api=1&query=R.+Lauro+Pedro+Nunes,+134+-+Jardim+Maria+Beatriz,+Carapicuíba+-+SP" target="_blank" class="btn btn-map">
                             <i class="fas fa-map-marked-alt"></i> Ver no Mapa
                         </a>
                     </div>
@@ -146,10 +145,9 @@
         <section>
             <h2><i class="fas fa-envelope-open-text"></i> Confirmação (RSVP)</h2>
             
-            <!-- AVISO CONVIDADO NÃO CONVIDA -->
             <div class="alert-box">
                 <i class="fas fa-exclamation-triangle"></i>
-                <strong>Atenção:</strong> Lembre-se que <em>"convidado não convida"</em>. Como nossa festa será em um buffet, a quantidade de pessoas é rigorosamente contada. A entrada será permitida apenas para os nomes confirmados abaixo. Agradecemos muito a compreensão! 💛
+                <strong>Atenção:</strong> Lembre-se que <em>"convidado não convida"</em>. Como nossa festa será em um buffet, a entrada será permitida apenas para os nomes confirmados abaixo. Agradecemos muito a compreensão! 💛
             </div>
 
             <form id="rsvpForm" name="rsvpForm">
@@ -173,7 +171,6 @@
                     </div>
                 </div>
 
-                <!-- CÔNJUGE -->
                 <div class="form-group">
                     <label>Possui cônjuge convidado?</label>
                     <div class="radio-group-inline">
@@ -183,7 +180,6 @@
                     <input type="text" name="Nome_Conjugue" id="input-conjugue" class="child-input" placeholder="Digite o nome do seu cônjuge">
                 </div>
 
-                <!-- Crianças MAIORES de 5 anos -->
                 <div class="form-group">
                     <label>Possui criança MAIOR que 5 anos?</label>
                     <div class="radio-group-inline">
@@ -193,7 +189,6 @@
                     <input type="text" name="Nome_Crianca_Maior" id="input-maior" class="child-input" placeholder="Digite o nome da(s) criança(s)">
                 </div>
 
-                <!-- Crianças MENORES de 5 anos -->
                 <div class="form-group">
                     <label>Possui criança MENOR que 5 anos?</label>
                     <div class="radio-group-inline">
@@ -234,7 +229,6 @@
         </footer>
     </div>
 
-    <!-- WhatsApp Atualizado -->
     <a href="https://wa.me/5519981724297?text=Ol%C3%A1!%20Estou%20entrando%20em%20contato%20sobre%20o%20anivers%C3%A1rio%20do%20Lohan!" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -252,9 +246,7 @@
             }
         }
 
-        // --- ATENÇÃO: COLE SUA URL DO SCRIPT ABAIXO ---
-        // (A mesma URL que você gerou na versão anterior para o CORS funcionar)
-        const scriptURL = 'COLE_SUA_URL_DO_SCRIPT_AQUI'; 
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxGdnYLlFOaJBa6mOVOX7VysSmBg4wXFA0XlX_Lvnavz2aMYD6zTXXRmdnuriNEcwaclA/exec'; 
         
         const form = document.forms['rsvpForm'];
         const btnSubmit = document.getElementById('btn-submit');
@@ -274,12 +266,12 @@
                 msgSucesso.style.display = 'block';
                 btnSubmit.style.display = 'none'; 
                 form.reset();
-                // Limpa e esconde os campos condicionais ao terminar
                 toggleInput('input-conjugue', false);
                 toggleInput('input-maior', false);
                 toggleInput('input-menor', false);
             })
             .catch(error => {
+                console.error('Erro!', error.message);
                 alert('Erro ao enviar. Por favor, tente novamente ou chame no WhatsApp.');
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = 'Confirmar Presença <i class="fas fa-check-circle"></i>';
